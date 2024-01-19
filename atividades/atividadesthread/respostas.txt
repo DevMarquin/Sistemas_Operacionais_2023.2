@@ -1,0 +1,147 @@
+1) 210
+
+2) Realiza o somatório dos números de 1 até o número passado como parâmetro.
+
+3) Código-fonte
+
+5) Se for chamada a função pthread_exit(valor); Quando a rotina executa pela thread dá return passando um valor inteiro; Quando a rotina é cancelada através da função pthread_cancel(3); Quando alguma thread do processo chama exit(valor) ou a thread main executa um return.
+
+6) scope = PTHREAD_SCOPE_PROCESS -> A thread vai competir por recursos com todas as outras threads naquele mesmo processo que também foram criadas com esse mesmo valor para o scope.
+
+detachstate = PTHREAD_CREATE_JOINABLE -> A thread é criada em um estado joinable, ou seja, é possível ter acesso ao status de saída e a thread mesmo após sua terminação.
+
+stackaddr = NULL -> Especifica se a thread vai ter uma pilha alocada pelo sistema
+
+stacksize = 1 megabyte -> Especifica o tamanho da pilha
+
+priority = default -> A thread herda a prioridade do pai
+
+inheritsched = PTHREAD_INHERIT_SCHED -> A thread vai herdar os atributos escalonamento do pai
+
+schedpolicy = SCHED_OTHER -> Define a política de escalonamento da thread como a padrão do linux. Serve para as threads que não necessitam de mecanismos de tempo real. 
+
+7) A função pthread_join é usada em programação de threads com objetivo de fazer com que uma thread não finalize antes do programa, fazendo com que o processo principal espere as threads terminarem antes do próprio processo finalizar.
+
+8) 
+./clonebin 1 2:
+Foi alocado espaco para (2) threads
+Threads filhas finalizadas.
+Executando na tarefa filha 2 
+	 thread(2) = 2 * 1 = 2
+	 thread(2) = 2 * 2 = 4
+	 thread(2) = 2 * 3 = 6
+	 thread(2) = 2 * 4 = 8
+	 thread(2) = 2 * 5 = 10
+	 thread(2) = 2 * 6 = 12
+	 thread(2) = 2 * 7 = 14
+	 thread(2) = 2 * 8 = 16
+	 thread(2) = 2 * 9 = 18
+	 thread(2) = 2 * 10 = 20
+
+Executando na tarefa filha 1 
+	 thread(1) = 1 * 1 = 1
+	 thread(1) = 1 * 2 = 2
+	 thread(1) = 1 * 3 = 3
+	 thread(1) = 1 * 4 = 4
+	 thread(1) = 1 * 5 = 5
+	 thread(1) = 1 * 6 = 6
+	 thread(1) = 1 * 7 = 7
+	 thread(1) = 1 * 8 = 8
+	 thread(1) = 1 * 9 = 9
+	 thread(1) = 1 * 10 = 10
+
+
+
+./clonebin 5 6 7 8:
+Foi alocado espaco para (4) threads
+Threads filhas finalizadas.
+Executando na tarefa filha 6 
+	 thread(6) = 6 * 1 = 6
+	 thread(6) = 6 * 2 = 12
+	 thread(6) = 6 * 3 = 18
+	 thread(6) = 6 * 4 = 24
+	 thread(6) = 6 * 5 = 30
+	 thread(6) = 6 * 6 = 36
+	 thread(6) = 6 * 7 = 42
+	 thread(6) = 6 * 8 = 48
+	 thread(6) = 6 * 9 = 54
+	 thread(6) = 6 * 10 = 60
+
+Executando na tarefa filha 5 
+	 thread(5) = 5 * 1 = 5
+	 thread(5) = 5 * 2 = 10
+	 thread(5) = 5 * 3 = 15
+	 thread(5) = 5 * 4 = 20
+	 thread(5) = 5 * 5 = 25
+	 thread(5) = 5 * 6 = 30
+	 thread(5) = 5 * 7 = 35
+	 thread(5) = 5 * 8 = 40
+	 thread(5) = 5 * 9 = 45
+	 thread(5) = 5 * 10 = 50
+
+Executando na tarefa filha 7 
+	 thread(7) = 7 * 1 = 7
+	 thread(7) = 7 * 2 = 14
+	 thread(7) = 7 * 3 = 21
+	 thread(7) = 7 * 4 = 28
+	 thread(7) = 7 * 5 = 35
+	 thread(7) = 7 * 6 = 42
+	 thread(7) = 7 * 7 = 49
+	 thread(7) = 7 * 8 = 56
+	 thread(7) = 7 * 9 = 63
+	 thread(7) = 7 * 10 = 70
+
+Executando na tarefa filha 8 
+	 thread(8) = 8 * 1 = 8
+	 thread(8) = 8 * 2 = 16
+	 thread(8) = 8 * 3 = 24
+	 thread(8) = 8 * 4 = 32
+	 thread(8) = 8 * 5 = 40
+	 thread(8) = 8 * 6 = 48
+	 thread(8) = 8 * 7 = 56
+	 thread(8) = 8 * 8 = 64
+	 thread(8) = 8 * 9 = 72
+	 thread(8) = 8 * 10 = 80
+
+9) Não são sempre a mesma e há mistura pelo fato de executar todas as threads ao mesmo tempo e ocorre de uma terminar primeiro que a outra, pois não estão sincronizadas.
+
+10) O trecho define a função thread_code, que é a função executada por cada thread criada no programa. Em resumo, desempenha o papel de calcular e mostrar uma tabela de multiplicação para um número específico (n) em cada uma das threads criadas pelo programa.
+
+11) 
+1- clone: É uma chamada de sistema que cria um novo processo ou thread no SO, sendo capaz de criar um novo processo ou thread com diferentes graus de compartilhamento de recursos com o processo ou thread pai.
+
+2- CLONE_VM: o novo processo ou thread compartilhará o mesmo espaço de endereçamento virtual com o processo principal.
+CLONE_FS: o novo processo ou thread compartilhará o mesmo sistema de arquivos com o processo principal.
+CLONE_FILES: o novo processo ou thread compartilhará a mesma tabela de descritores de arquivo com o processo principal.
+CLONE_SIGHAND: o novo processo ou thread compartilhará o mesmo tratamento de sinais (signal handlers) com o processo principal.
+
+12) O stack é usado para armazenar variáveis locais e controlar o fluxo de execução de funções. Cada thread possui sua própria stack para isolamento e eficiência, evitando conflitos entre threads. Stacks individuais garantem que cada thread tenha seu próprio espaço de memória, simplificando o gerenciamento de dados locais e fluxo de execução.
+
+13) STACK_SIZE=65536, significando que cada thread tem 65536 bytes. Este código prepara a criação de threads, alocando memória para suas pilhas (stacks) e armazenando os endereços base e topo de cada pilha. Para cada argumento passado para o programa, ele aloca um bloco de memória de tamanho STACK_SIZE, verifica se a alocação foi bem-sucedida e define o endereço topo da pilha como sendo o endereço base da pilha mais o tamanho da pilha.
+
+14) Apresentam valores diferentes porque eles têm seus próprios espaços de memória separados quando são criados através da função fork(). Quando a função fork() é chamada, ela cria um novo processo duplicando o processo existente. Isso inclui a cópia de todas as variáveis globais e locais. Portanto, o processo filho tem sua própria cópia da variável valor, que é inicialmente igual à do processo pai. O processo filho incrementa o valor de valor em 15, enquanto o processo pai não faz nenhuma alteração. Portanto, quando ambos os processos imprimem o valor de valor, eles mostram valores diferentes.
+
+15) A função fork() retorna um valor diferente para o processo pai e para o processo filho. No processo pai, o valor retornado é o ID do processo filho (um número positivo). No processo filho, o valor retornado é 0. Se ocorrer um erro, o valor retornado é -1.
+
+17) Os números significam o id do processo. 8 números. 8 processos.
+
+18) Sim, é possível. Se usar a fórmula nps=2^n, como fork foi chamado três vezes, seria 2^3 = 8.
+
+19) 
+%%writefile 10processos.c
+#include <stdio.h>
+#include <unistd.h>
+
+int main()
+{
+    printf("1- %d\n", getpid());
+
+    for (int i = 0; i < 9; ++i) {
+        if (fork() == 0) {  // Somente o processo filho continua no loop
+        		printf("%d- %d\n", i + 2, getpid());
+            break;
+        }
+    }
+
+    return 0;
+}
