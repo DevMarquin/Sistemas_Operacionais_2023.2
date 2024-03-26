@@ -1,0 +1,57 @@
+2- 
+Codigo #A
+O comportamento do código é controlado pelo objeto lock, para sincronizar o acesso a função wish entre as duas threads. O lock garante que apenas uma thread possa ser executada protegida por ele de cada vez, quando a thread adquire o lock, nenhuma outra pode adquiri-lo ate a atual o libere, isso é feito através do acquire() e release().
+l=Lock(): Cria um objeto de bloqueio.
+l.acquire(): Adquire o bloqueio, bloqueando o acesso para outras threads.
+l.release(): Libera o bloqueio.
+
+Hi Sireesh
+Your age is 15
+Hi Nitya
+Your age is 20
+Hi Sireesh
+Your age is 15
+Hi Nitya
+Your age is 20
+Hi Sireesh
+Your age is 15
+Hi Nitya
+Your age is 20
+
+Código #B
+O comportamento do código B é controlado pelo uso do objeto semaphore para sincronizar o acesso a função wish entre 4 threads.o Semaphore é inicializado com um valor de 2, o que significa que até duas threads podem acessar a função wish ao mesmo tempo.
+s=Semaphore(2): Cria um semáforo com um contador inicial de 2.
+s.acquire(): Adquire uma unidade do semáforo. Se o contador for maior que zero, a thread prossegue; caso contrário, ela fica bloqueada até que uma unidade esteja disponível.
+s.release(): Libera uma unidade do semáforo, incrementando o contador.
+
+Hi Sireesh
+Hi Nitya
+Your age is 20
+Hi Sireesh
+Hi Nitya
+Your age is 20
+Hi Shiva
+Your age is 16
+Hi Shiva
+Your age is 16
+Hi Ajay
+Your age is 25
+Hi Ajay
+Your age is 25
+
+Código #C
+O comportamento do código C é controlado pelo uso do objeto lock para sincronizar o acesso à variável global g entre várias threads.Duas funções, add_one e add_two, são definidas para adicionar 1 ou 2 à variável global g respectivamente. Essas funções são projetadas para serem executadas por threads criadas dinamicamente dentro de um loop. O Lock é adquirido no início de cada função e liberado após a modificação da variável global g, garantindo que apenas uma thread possa modificar g por vez.
+
+9
+
+
+
+3- 
+I- O código é uma simulação de transferências entre duas contas bancárias (conta1 e conta2) usando threads. Cada thread representa uma transferência de um valor fixo (1) da conta 1 para a conta 2.
+
+II- O resultado após a execução do código é a impressão do saldo final das duas contas (conta1 e conta2). O saldo inicial da conta1 é 100 e o saldo inicial da conta2 é 0. Como há 100 transferências de 1 unidade de conta1 para conta2, o saldo final de conta1 será 0 e o saldo final de conta2 será 100.
+
+III- O resultado nem sempre é o mesmo ao executar o código 10 vezes, pois nao há uma ordem de execução das threads,ou seja, a variação pode ocorrer quando várias threads tentam acessar e modificar as variáveis de saldo das contas simultaneamente.
+
+IV- Uma forma de garantir que ao final da execução do código conta2 possua saldo 100 e conta1 possua saldo 0, é utilizando o Lock, garantindo que apenas uma thread por vez possa modificá-las.
+
