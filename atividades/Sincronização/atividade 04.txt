@@ -1,0 +1,104 @@
+1)
+
+2)
+Codigo #A
+O comportamento do código é controlado pelo objeto lock, para sincronizar o acesso a função wish entre as duas threads. O lock garante que apenas uma thread possa ser executada protegida por ele de cada vez, quando a thread adquire o lock, nenhuma outra pode adquiri-lo ate que a atual o libere, isso é feito através do acquire() e release().
+l=Lock(): Cria um objeto de bloqueio.
+l.acquire(): Adquire o bloqueio, bloqueando o acesso para outras threads.
+l.release(): Libera o bloqueio.
+
+Hi Sireesh
+Your age is 15
+Hi Nitya
+Your age is 20
+Hi Sireesh
+Your age is 15
+Hi Nitya
+Your age is 20
+Hi Sireesh
+Your age is 15
+Hi Nitya
+Your age is 20
+
+Código #B
+O comportamento do código B é controlado pelo uso do objeto semaphore para sincronizar o acesso a função wish entre 4 threads. O Semaphore é inicializado com um valor de 2, o que significa que até duas threads podem acessar a função wish ao mesmo tempo.
+s=Semaphore(2): Cria um semáforo com um contador inicial de 2.
+s.acquire(): Adquire uma unidade do semáforo. Se o contador for maior que zero, a thread prossegue; caso contrário, ela fica bloqueada até que uma unidade esteja disponível.
+s.release(): Libera uma unidade do semáforo, incrementando o contador.
+
+Hi Sireesh
+Hi Nitya
+Hi Sireesh
+Hi Nitya
+Hi Nitya
+Hi Sireesh
+Hi Shiva
+Hi Ajay
+Hi Ajay
+Hi Shiva
+Hi Ajay
+Hi Shiva
+
+Código #C
+O comportamento do código C é controlado pelo uso do objeto lock para sincronizar o acesso à variável global g entre várias threads. A funções add_one e add_two são definidas para adicionar 1 ou 2 a variável global g, respectivamente. Essas funções são projetadas para serem executadas por threads criadas dinamicamente dentro de um loop. O Lock é adquirido no início de cada função e liberado após a modificação da variável global g, garantindo que apenas uma thread possa modificar g por vez.
+
+9
+
+3)
+I- O código é uma simulação de transferências entre duas contas bancárias (conta1 e conta2) usando threads. Cada thread representa uma transferência de um valor de 1 real da conta 1 para a conta 2.
+
+II- O resultado varia, sendo que o saldo da conta 1 fica com uma média de 98 ao final e o saldo da conta 2 fica com uma média de 2 ao final da execução.
+
+III- O resultado nem sempre é o mesmo ao executar o código 10 vezes, pois nao há uma ordem de execução das threads,ou seja, a variação pode ocorrer quando várias threads tentam acessar e modificar as variáveis de saldo das contas simultaneamente.
+
+IV- 
+
+import threading
+from threading import Semaphore
+
+s = Semaphore(1)
+
+
+class ContaBancaria:
+    def __init__(self, nome, saldo):
+        self.nome = nome
+        self.saldo = saldo
+
+    def __str__(self):
+        return self.nome
+
+
+conta1 = ContaBancaria("conta1", 100)
+conta2 = ContaBancaria("conta2", 0)
+
+
+class ThreadTransferenciaEntreContas(threading.Thread):
+    def __init__(self, origem, destino, valor):
+        threading.Thread.__init__(self)
+        self.origem = origem
+        self.destino = destino
+        self.valor = valor
+
+    def run(self):
+        s.acquire()
+        origem_saldo_inicial = self.origem.saldo
+        origem_saldo_inicial -= self.valor
+        # time.sleep(0.001)
+        self.origem.saldo = origem_saldo_inicial
+        destino_saldo_inicial = self.destino.saldo
+        destino_saldo_inicial += self.valor
+        # time.sleep(0.001)
+        self.destino.saldo = destino_saldo_inicial
+        s.release()
+
+
+if __name__ == "__main__":
+    threads = []
+    for i in range(100):
+        threads.append(ThreadTransferenciaEntreContas(conta1, conta2, 1))
+    for thread in threads:
+        thread.start()
+    for thread in threads:
+        thread.join()
+    print("Saldo da", conta1, ":", conta1.saldo)
+    print("Saldo da", conta2, ":", conta2.saldo)
